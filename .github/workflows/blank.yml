@@ -16,6 +16,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_image:
+    outputs:
+      image: ${{ steps.build.outputs.image }}
     runs-on: ubuntu-latest
     steps:
       # - uses: actions/checkout@v4
@@ -31,14 +33,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Info
         run: |
-          echo uploading task definition for image "${{ needs.build_image.steps.build.outputs.image }}"
+          echo uploading task definition for image "${{ needs.build_image.outputs.image }}"
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: "dev-definition.json"
           container-name: "test-container"
-          image: ${{ needs.build_image.steps.build.outputs.image }}
+          image: ${{ needs.build_image.outputs.image }}
       - name: Show
         run: |
           echo ${{ steps.task-def.outputs.task-definition }}
