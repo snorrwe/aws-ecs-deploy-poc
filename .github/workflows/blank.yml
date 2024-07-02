@@ -15,8 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  build_image:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -31,7 +30,7 @@ jobs:
           echo "image=hello-world:latest" >> $GITHUB_OUTPUT
 
   upload-ecs-task:
-    needs: [build]
+    needs: [build_image]
     runs-on: ubuntu-latest
     steps:
       - name: Fill in the new image ID in the Amazon ECS task definition
@@ -40,7 +39,7 @@ jobs:
         with:
           task-definition: "dev-definition.json"
           container-name: "test-container"
-          image: ${{ build.steps.build.outputs.image }}
+          image: ${{ build_image.steps.build.outputs.image }}
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
