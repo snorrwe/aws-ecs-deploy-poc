@@ -2,7 +2,7 @@
   "memory": "",
   "containerDefinitions": [
     {
-      "name": "sample-container",
+      "name": "test-container",
       "logConfiguration": {},
       "repositoryCredentials": {
         "credentialsParameter": ""
