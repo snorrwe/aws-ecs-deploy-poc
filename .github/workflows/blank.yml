@@ -16,14 +16,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_image:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
+      # - uses: actions/checkout@v4
       - name: Build docker image
         id: build
         run: |
@@ -33,6 +28,7 @@ jobs:
     needs: [build_image]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Info
         run: |
           echo uploading task definition for image ${{ needs.build_image.steps.build.outputs.image }}
