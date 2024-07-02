@@ -39,7 +39,7 @@ jobs:
         with:
           task-definition: "dev-definition.json"
           container-name: "test-container"
-          image: ${{ build_image.steps.build.outputs.image }}
+          image: ${{ needs.build_image.steps.build.outputs.image }}
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
