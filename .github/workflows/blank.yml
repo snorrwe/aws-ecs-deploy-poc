@@ -33,6 +33,9 @@ jobs:
     needs: [build_image]
     runs-on: ubuntu-latest
     steps:
+      - name: Info
+        run: |
+          echo uploading task definition for image ${{ needs.build_image.steps.build.outputs.image }}
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
