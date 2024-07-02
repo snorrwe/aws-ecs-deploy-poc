@@ -39,10 +39,15 @@ jobs:
           task-definition: "dev-definition.json"
           container-name: "test-container"
           image: ${{ needs.build_image.steps.build.outputs.image }}
-      - name: Deploy to Amazon ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          cluster: "test-cluster"
-          wait-for-service-stability: false
+      - name: Show
+        run: |
+          echo ${{ steps.task-def.outputs.task-definition }}
+          cat ${{ steps.task-def.outputs.task-definition }}
 
+      # - name: Deploy to Amazon ECS
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
+      #     cluster: "test-cluster"
+      #     wait-for-service-stability: false
+      #
